@@ -22,6 +22,7 @@ return new class extends Migration
             $table->uuid('dokter_id');
 
             $table->date('tanggal_kunjungan');
+            $table->unsignedInteger('nomor_antrean');
             $table->enum('jenis_pembayaran', [
                 'umum',
                 'bpjs',
@@ -61,6 +62,7 @@ return new class extends Migration
             $table->index('poli_id');
             $table->index('dokter_id');
             $table->index('tanggal_kunjungan');
+            $table->index('nomor_antrean');
             $table->index('jenis_pembayaran');
             $table->index('status');
             $table->index('created_by');
@@ -70,6 +72,12 @@ return new class extends Migration
             $table->index([
                 'tanggal_kunjungan',
                 'status'
+            ]);
+
+            $table->unique([
+                'tanggal_kunjungan',
+                'poli_id',
+                'nomor_antrean'
             ]);
 
             // laporan dokter

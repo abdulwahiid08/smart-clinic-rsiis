@@ -19,7 +19,7 @@
             <div class="panel-head">
                 <div>
                     <h2>Informasi Kunjungan</h2>
-                    <p>{{ $kunjungan->tanggal_kunjungan->format('d M Y') }} - {{ strtoupper($kunjungan->jenis_pembayaran) }}</p>
+                    <p>{{ $kunjungan->tanggal_kunjungan->format('d M Y') }} - Antrean A{{ str_pad((string) $kunjungan->nomor_antrean, 3, '0', STR_PAD_LEFT) }} - {{ strtoupper($kunjungan->jenis_pembayaran) }}</p>
                 </div>
                 <span class="badge {{ $kunjungan->status }}">{{ str_replace('_', ' ', $kunjungan->status) }}</span>
             </div>

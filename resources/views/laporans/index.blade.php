@@ -6,6 +6,13 @@
 
 @section('content')
     <section class="panel">
+        <div class="panel-head">
+            <div>
+                <h2>Filter Laporan</h2>
+                <p>Export akan mengikuti filter yang sedang dipakai.</p>
+            </div>
+            <a class="button ghost" href="{{ route('laporans.export', request()->query()) }}">Export CSV</a>
+        </div>
         <form class="report-filter" method="GET">
             <label>Nama Pasien
                 <input name="nama_pasien" value="{{ request('nama_pasien') }}" placeholder="Contoh: Ahmad">

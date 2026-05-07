@@ -22,6 +22,7 @@
                     <tr>
                         <th>Tanggal</th>
                         <th>Kode</th>
+                        <th>Antrean</th>
                         <th>Pasien</th>
                         <th>Poli</th>
                         <th>Dokter</th>
@@ -34,6 +35,7 @@
                         <tr>
                             <td>{{ $kunjungan->tanggal_kunjungan->format('d M Y') }}</td>
                             <td>{{ $kunjungan->kode_kunjungan }}</td>
+                            <td>A{{ str_pad((string) $kunjungan->nomor_antrean, 3, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $kunjungan->pasien->nama_pasien }}</td>
                             <td>{{ $kunjungan->poli->nama_poli }}</td>
                             <td>{{ $kunjungan->dokter->nama_dokter }}</td>
@@ -51,7 +53,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="7" class="empty">Data kunjungan belum tersedia.</td></tr>
+                        <tr><td colspan="8" class="empty">Data kunjungan belum tersedia.</td></tr>
                     @endforelse
                 </tbody>
             </table>

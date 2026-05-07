@@ -8,6 +8,7 @@ use App\Features\Kunjungan\Services\PendaftaranService;
 use App\Http\Controllers\Controller;
 use App\Models\Dokter;
 use App\Models\Kunjungan;
+use App\Models\Pasien;
 use App\Models\Poli;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class KunjunganController extends Controller
         return view('kunjungans.create', [
             'polis' => Poli::orderBy('nama_poli')->get(),
             'dokters' => Dokter::with('poli')->orderBy('nama_dokter')->get(),
+            'pasiens' => Pasien::orderBy('nama_pasien')->limit(200)->get(),
         ]);
     }
 

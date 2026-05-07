@@ -7,7 +7,9 @@ use App\Models\Dokter;
 use App\Models\Kunjungan;
 use App\Models\Pasien;
 use App\Models\Poli;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +20,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::transaction(function () {
+            User::firstOrCreate(
+                ['email' => 'admin@rsi.test'],
+                [
+                    'name' => 'Admin RSI Ibnu Sina',
+                    'password' => Hash::make('password'),
+                ]
+            );
+
             $umum = Poli::firstOrCreate(
                 ['nama_poli' => 'Poli Umum'],
                 ['deskripsi' => 'Pelayanan pemeriksaan umum rawat jalan.']
@@ -66,6 +76,7 @@ class DatabaseSeeder extends Seeder
                     'poli_id' => $dokterDalam->poli_id,
                     'dokter_id' => $dokterDalam->id,
                     'tanggal_kunjungan' => today(),
+                    'nomor_antrean' => 1,
                     'jenis_pembayaran' => 'bpjs',
                     'status' => Kunjungan::STATUS_SUDAH_ASESMEN,
                 ]
@@ -102,6 +113,7 @@ class DatabaseSeeder extends Seeder
                     'poli_id' => $dokterUmum->poli_id,
                     'dokter_id' => $dokterUmum->id,
                     'tanggal_kunjungan' => today(),
+                    'nomor_antrean' => 1,
                     'jenis_pembayaran' => 'umum',
                     'status' => Kunjungan::STATUS_TERDAFTAR,
                 ]

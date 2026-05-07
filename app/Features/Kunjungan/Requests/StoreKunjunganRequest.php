@@ -14,9 +14,10 @@ class StoreKunjunganRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_pasien' => ['required', 'string', 'max:255'],
+            'pasien_id' => ['nullable', 'exists:pasiens,id'],
+            'nama_pasien' => ['required_without:pasien_id', 'nullable', 'string', 'max:255'],
             'tanggal_lahir' => ['nullable', 'date', 'before_or_equal:today'],
-            'jenis_kelamin' => ['required', 'in:L,P'],
+            'jenis_kelamin' => ['required_without:pasien_id', 'nullable', 'in:L,P'],
             'nomor_hp' => ['nullable', 'string', 'max:30'],
             'alamat' => ['nullable', 'string'],
             'tanggal_kunjungan' => ['required', 'date'],
@@ -31,6 +32,7 @@ class StoreKunjunganRequest extends FormRequest
         return [
             'poli_id' => 'poli tujuan',
             'dokter_id' => 'dokter',
+            'pasien_id' => 'pasien terdaftar',
         ];
     }
 }

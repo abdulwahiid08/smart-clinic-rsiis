@@ -5,15 +5,28 @@
 <div class="form-grid">
     <section class="panel form-section">
         <h2>Data Pasien</h2>
+        @if (($pasiens ?? collect())->isNotEmpty() && ! $kunjungan->exists)
+            <label>Gunakan Pasien Terdaftar
+                <select name="pasien_id">
+                    <option value="">Input pasien baru</option>
+                    @foreach ($pasiens as $registeredPatient)
+                        <option value="{{ $registeredPatient->id }}" @selected(old('pasien_id') === $registeredPatient->id)>
+                            {{ $registeredPatient->kode_pasien }} - {{ $registeredPatient->nama_pasien }}
+                        </option>
+                    @endforeach
+                </select>
+            </label>
+            <p class="field-note">Pilih pasien lama untuk membuat kunjungan baru tanpa menduplikasi data pasien.</p>
+        @endif
         <label>Nama Pasien
-            <input name="nama_pasien" value="{{ old('nama_pasien', $pasien->nama_pasien ?? '') }}" required>
+            <input name="nama_pasien" value="{{ old('nama_pasien', $pasien->nama_pasien ?? '') }}">
         </label>
         <div class="two-col">
             <label>Tanggal Lahir
                 <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', optional($pasien?->tanggal_lahir)->format('Y-m-d')) }}">
             </label>
             <label>Jenis Kelamin
-                <select name="jenis_kelamin" required>
+                <select name="jenis_kelamin">
                     <option value="">Pilih</option>
                     <option value="L" @selected(old('jenis_kelamin', $pasien->jenis_kelamin ?? '') === 'L')>Laki-laki</option>
                     <option value="P" @selected(old('jenis_kelamin', $pasien->jenis_kelamin ?? '') === 'P')>Perempuan</option>

@@ -42,6 +42,7 @@
                 <thead>
                     <tr>
                         <th>Kode</th>
+                        <th>Antrean</th>
                         <th>Pasien</th>
                         <th>Poli</th>
                         <th>Dokter</th>
@@ -53,6 +54,7 @@
                     @forelse ($kunjungans as $kunjungan)
                         <tr>
                             <td>{{ $kunjungan->kode_kunjungan }}</td>
+                            <td>A{{ str_pad((string) $kunjungan->nomor_antrean, 3, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $kunjungan->pasien->nama_pasien }}</td>
                             <td>{{ $kunjungan->poli->nama_poli }}</td>
                             <td>{{ $kunjungan->dokter->nama_dokter }}</td>
@@ -60,7 +62,7 @@
                             <td><a href="{{ route('kunjungans.show', $kunjungan) }}">Detail</a></td>
                         </tr>
                     @empty
-                        <tr><td colspan="6" class="empty">Belum ada kunjungan.</td></tr>
+                        <tr><td colspan="7" class="empty">Belum ada kunjungan.</td></tr>
                     @endforelse
                 </tbody>
             </table>

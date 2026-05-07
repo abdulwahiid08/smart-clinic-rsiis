@@ -14,8 +14,13 @@ use App\Features\Dashboard\DashboardController;
 |
 */
 
-Route::get('/', DashboardController::class)->name('dashboard');
+require app_path('Features/Auth/routes.php');
 
-require app_path('Features/Kunjungan/routes.php');
-require app_path('Features/Asesmen/routes.php');
-require app_path('Features/Laporan/routes.php');
+Route::middleware('auth')->group(function () {
+    Route::get('/', DashboardController::class)->name('dashboard');
+
+    require app_path('Features/MasterData/routes.php');
+    require app_path('Features/Kunjungan/routes.php');
+    require app_path('Features/Asesmen/routes.php');
+    require app_path('Features/Laporan/routes.php');
+});

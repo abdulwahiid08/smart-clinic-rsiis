@@ -25,6 +25,7 @@ class Kunjungan extends Model
         'poli_id',
         'dokter_id',
         'tanggal_kunjungan',
+        'nomor_antrean',
         'jenis_pembayaran',
         'status',
         'created_by',
@@ -58,5 +59,19 @@ class Kunjungan extends Model
     public function scopeAktif($query)
     {
         return $query->where('status', '!=', self::STATUS_BATAL);
+    }
+
+    public function scopeFilterLaporan($query, array $filters)
+    {
+        return $query
+            ->when(filled($filters['nama_pasien'] ?? null), function ($query) use ($filters) {
+                $query->whereHas('pasien', fn ($pasien) => $pasien->where('nama_pasien', 'like', '%' . $filters['nama_pasien'] . '%'));
+            })
+            ->when(filled($filters['tanggal_kunjungan'] ?? null), fn ($query) => $query->whereDate('tanggal_kunjungan', $filters['tanggal_kunjungan']))
+            ->when(filled($filters['dokter_id'] ?? null), fn ($query) => $query->where('dokter_id', $filters['dokter_id']))
+            ->when(filled($filters['diagnosis'] ?? null), function ($query) use ($filters) {
+                $query->whereHas('asesmen', fn ($asesmen) => $asesmen->where('diagnosis_awal', 'like', '%' . $filters['diagnosis'] . '%'));
+            })
+            ->when(filled($filters['status'] ?? null), fn ($query) => $query->where('status', $filters['status']));
     }
 }
